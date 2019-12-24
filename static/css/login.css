@@ -1,0 +1,15 @@
+.jumbotron {
+  max-width: 50%;
+  min-width: 300px;
+  min-height: 150px;
+  max-height: 50%;
+  padding: 6%;
+  margin: auto;
+  margin-top: 20%;
+  background-color: white;
+}
+
+body {
+  background-color: #9fd0e8;
+}
+

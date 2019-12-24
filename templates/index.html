@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Channel list</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md">
+        <div class="container-fluid">
+            <span class="text-center" id="navbar-logo">F</span>
+            <a class="navbar-brand" href="{{ url_for('index') }}">Flack</a>
+            <span>Channels</span>
+            <div class="container" id="navbar-user"><span>Hello, {{ username }}</div></span>
+            <button class="btn btn-light" id="logout">Log out</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <hr>
+        <h1>Available channels:</h1>
+        <hr>
+        <form method="post" action="{{ url_for('create') }}" class="form-inline" id="channel-form">
+            <div class="form-group">
+                <input type="text" class="form-control" name="channel-name" id="channel-name" placeholder="New channel name">
+            </div>
+            <button style="margin-left:10px" type="submit" class="btn btn-primary">Create channel</button>
+        </form>
+        <hr>
+        <div id="channel-list">
+            {% for channel in channels %}
+                <div class="channel">{{ channel }}</div>
+            {% else %}
+                <div class="channel" id="no-channels">No channels available at the time. Please try again later.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
