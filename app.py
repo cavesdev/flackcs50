@@ -2,13 +2,11 @@ import os
 
 from flask import Flask, render_template, jsonify, request
 
-# from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
-"""
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+app.config["SECRET_KEY"] = 'secret!'
 socketio = SocketIO(app)
-"""
 
 channels = []
 
@@ -23,8 +21,18 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/create', methods=['POST'])
-def create():
-    new_channel = request.form.get('channel-name')
-    channels.append(new_channel)
+@app.route('/channel/<string:name>')
+def channel(name):
+    print(name)
     return render_template('index.html')
+
+
+@socketio.on('create channel')
+def create(data):
+    channels.append(data['name'])
+    print(channels)
+    emit('new channel', { 'name': data['name']}, broadcast=True)
+
+
+if __name__ == '__main__':
+    socketio.run(app)

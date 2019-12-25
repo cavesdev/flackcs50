@@ -1,9 +1,12 @@
 // check if user is logged in
-if (!localStorage.getItem('username')) {
+const user = localStorage.getItem('username')
+if (!user) {
     window.location.href = '/login'
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     // add logout functionality to button
     document.querySelector('#logout').onclick = () => {
@@ -20,22 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
 
-        const channel = document.createElement('div');
-        channel.className = 'channel';
-        channel.innerHTML = channelName.value;
+        socket.emit('create channel', { 'name': channelName.value });
         channelName.value = '';
-
-        const noChannelsMessage = document.querySelector('#no-channels');
-
-        if (noChannelsMessage) {
-            noChannelsMessage.remove();
-        }
-
-        const channelList = document.querySelector('#channel-list');
-        channelList.insertBefore(channel, channelList.firstChild);
-
 
         return false;
     }
 
+    // add new channels in real time.
+    socket.on('new channel', data => {
+        createChannel(data.name);
+    });
 });
+
+function createChannel(name) {
+
+    const noChannelsMessage = document.querySelector('#no-channels');
+
+    if (noChannelsMessage) {
+        noChannelsMessage.remove();
+
+    }
+    const channel = document.createElement('div');
+    channel.className = 'channel';
+    channel.innerHTML = `<a href="/channel/${name}">Channel: <b>${name}</b> || author: <b>${user}</b></a>`;
+
+    const channelList = document.querySelector('#channel-list');
+    channelList.insertBefore(channel, channelList.firstChild);
+}
