@@ -4,6 +4,12 @@ if (!user) {
     window.location.href = '/login'
 }
 
+// check last channel accessed
+const lastChannel = localStorage.getItem('lastChannel')
+if (localStorage.getItem('lastChannel')) {
+    window.location.replace(`/channel/${lastChannel}`)
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);

@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
     const user = localStorage.getItem('username')
 
+    localStorage.setItem('lastChannel', channelName)
+
     //add user name to nav bar
     document.querySelector('#navbar-user').innerHTML += user;
 
