@@ -6,7 +6,10 @@ if (!user) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+    //add user name to nav bar
+    document.querySelector('#navbar-user').innerHTML += user;
 
     // add logout functionality to button
     document.querySelector('#logout').onclick = () => {
@@ -23,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
 
-        socket.emit('create channel', { 'name': channelName.value });
+        socket.emit('create channel', { 'name': channelName.value, 'author': user});
         channelName.value = '';
 
         return false;
@@ -45,7 +48,7 @@ function createChannel(name) {
     }
     const channel = document.createElement('div');
     channel.className = 'channel';
-    channel.innerHTML = `<a href="/channel/${name}">Channel: <b>${name}</b> || author: <b>${user}</b></a>`;
+    channel.innerHTML = `<a href="/channel/${name}">Channel: <b>${name}</b> by <b>${user}</b></a>`;
 
     const channelList = document.querySelector('#channel-list');
     channelList.insertBefore(channel, channelList.firstChild);

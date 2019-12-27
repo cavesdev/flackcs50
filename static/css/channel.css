@@ -1,0 +1,8 @@
+.jumbotron {
+    padding:30px
+}
+
+#message-container {
+    height: 200px;
+    overflow: scroll;
+}

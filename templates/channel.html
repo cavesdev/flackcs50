@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/channel.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Welcome to channel {{ channel.name }}</h1>
+            <h3>by {{ channel.author }}</h3>
+        </div>
+        <h2> Messages:</h2>
+        <div class="container" id="message-container">
+            <ul id="messages">
+                {% set messages = channel.messages %}
+                {% for i in range(messages|length) %}
+                    <li>{{ messages[i].message }} == <b>by {{ messages[i].author }} on {{ messages[i].timestamp }}</b></li>
+                {% else %}
+                    <li id="no-messages"> No messages yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <form class="form-inline" id="message-form">
+            <div class="form-group">
+                <textarea class="form-control" id="message" placeholder="Write a message" rows="2" autofocus></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/channel.js') }}"></script>
+    <script>
+        var channelName = '{{ channel.name }}';
+        var messageCounter = {{ counter }};
+    </script>
+{% endblock %}

@@ -25,14 +25,11 @@
   border-radius: 10px;
   text-align: center;
   padding: 10px;
+  font-size: 18px;
 }
 
 .navbar {
   background-color: #84c3f1;
-}
-
-#navbar-user span {
-  font-size: 18px;
 }
 
 .navbar span {
@@ -46,7 +43,10 @@
   background-color: #84c3f1;
   border-radius: 10px;
   padding: 10px;
-  opacity: 90%;
   margin: 12px 0px;
+}
+
+a {
+  color: black
 }
 
